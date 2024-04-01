@@ -29,7 +29,7 @@ function MappingPageContent() {
                 setMapping(data);
                 setHeaders(Object.keys(data));
             });
-    });
+    }, []);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
