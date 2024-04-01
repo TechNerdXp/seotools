@@ -163,7 +163,7 @@ def compress():
         # Check if the header exists in the DataFrame and is not 'keyword' or 'id'
         if header in data.columns and header not in ['keyword', 'Keyword']:
             # Append the values of the header to the corresponding category, ignoring NaN values
-            data[category] += data[header].apply(lambda x: ' ' + str(x) if pd.notna(x) else '')
+            data[category] = data.apply(lambda row: ', '.join(filter(None, [row[category], str(row[header]) if pd.notna(row[header]) else ''])), axis=1)
 
     # Drop the original columns, excluding 'keyword' and 'id'
     columns_to_drop = [key for key in mappings.keys() if key not in ['keyword', 'id']]
