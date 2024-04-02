@@ -103,7 +103,7 @@ function FilesTable() {
     return (
         <div className="overflow-x-auto">
             <label className="flex items-center space-x-2">
-                <input type="file" onChange={handleFileUpload} className="file-input file-input-bordered file-input-secondary w-full max-w-xs" accept=".csv" />
+                <input type="file" onChange={handleFileUpload} className="file-input file-input-bordered file-input-secondary w-full max-w-xs" accept=".csv" title="Upload a CSV with keywords in first column." />
             </label>
             <table className="table table-zebra	table-pin-rows">
                 <thead>
@@ -111,13 +111,13 @@ function FilesTable() {
                         <th>File Name</th>
                         <th>Status</th>
                         <th>Total Records</th>
-                        <th>Total Specs</th>
+                        <th>Total Processed</th>
                         <th>Total Remaining</th>
                         <th>Process</th>
+                        <th>Mapping</th>
                         <th>Compress</th>
                         <th>Input File</th>
                         <th>Specs File</th>
-                        <th>Mapping</th>
                         <th>Compressed</th>
                     </tr>
                 </thead>
@@ -134,15 +134,22 @@ function FilesTable() {
                                     onClick={() => handleStartProcess(file.file_name)}
                                     disabled={isProcessing || file.status === 'Complete'}
                                     className={`btn btn-circle btn-xs ${isProcessing || file.status === 'Complete' ? 'btn-disabled' : 'btn-ghost'}`}
+                                    title="Splits provided keywords into scecifications and outputs the data into specs CSV"
                                 >
                                     <PlayIcon className="w-5 h-5" />
                                 </button>
+                            </td>
+                            <td>
+                                <NavLink to={`/mapping?filepath=data/specs/specs_${file.file_name}`} className={`btn btn-circle btn-xs btn-ghost`} title="Mapping of each spec column to fewer category columns in the compressed CSV.">
+                                    <ArrowUpRightIcon className="w-5 h-5" />
+                                </NavLink>
                             </td>
                             <td>
                                 <button
                                     onClick={() => handleCompressing(file.file_name)}
                                     disabled={file.status !== 'Complete'}
                                     className={`btn btn-circle btn-xs ${file.status !== 'Complete' ? 'btn-disabled' : 'btn-ghost'}`}
+                                    title="Create a compressed CSV based on specs CSV and and Mapping data with fewer columns"
                                 >
                                     <PlayIcon className="w-5 h-5" />
                                 </button>
@@ -154,11 +161,6 @@ function FilesTable() {
                             </td>
                             <td>
                                 <NavLink to={`/file?filepath=data/specs/specs_${file.file_name}`} className={`btn btn-circle btn-xs btn-ghost`}>
-                                    <ArrowUpRightIcon className="w-5 h-5" />
-                                </NavLink>
-                            </td>
-                            <td>
-                                <NavLink to={`/mapping?filepath=data/specs/specs_${file.file_name}`} className={`btn btn-circle btn-xs btn-ghost`}>
                                     <ArrowUpRightIcon className="w-5 h-5" />
                                 </NavLink>
                             </td>
