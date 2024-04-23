@@ -25,11 +25,11 @@ def write_json(filename, data):
 def process_csv_file(filename):
     logger.info(f'Processing file: {filename}')
     if not os.path.exists(f'data/specs/specs_{filename}'):
-        with open(f'data/specs/specs_{filename}', 'w') as f:
+        with open(f'data/specs/specs_{filename}', 'a') as f:
             pass
 
     if not os.path.exists(f'data/output/failed_{filename}'):
-        with open(f'data/failed/failed_{filename}', 'w') as f:
+        with open(f'data/failed/failed_{filename}', 'a') as f:
             pass  
     
     df = pd.DataFrame()
